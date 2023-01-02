@@ -15,8 +15,6 @@ public class RedisExecProvider {
 
     private final Map<OsArchitecture, String> executables = Maps.newHashMap();
 
-    public static final String redisVersion = "6.2.7";
-
     public static RedisExecProvider defaultProvider() {
         return new RedisExecProvider();
     }
@@ -26,12 +24,16 @@ public class RedisExecProvider {
     }
 
     private void initExecutables() {
-        executables.put(OsArchitecture.UNIX_x86, "redis-server-" + redisVersion + "-linux-386");
-        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-" + redisVersion + "-linux-amd64");
-        executables.put(OsArchitecture.UNIX_arm64, "redis-server-" + redisVersion + "-linux-arm64");
+        executables.put(OsArchitecture.UNIX_x86,        Constants.DEFAULT_UNIX_X86);
+        executables.put(OsArchitecture.UNIX_x86_64,     Constants.DEFAULT_UNIX_X86_64);
+        executables.put(OsArchitecture.UNIX_arm64,      Constants.DEFAULT_UNIX_ARM64);
 
-        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-" + redisVersion + "-darwin-amd64");
-        executables.put(OsArchitecture.MAC_OS_X_arm64, "redis-server-" + redisVersion + "-darwin-arm64");
+        executables.put(OsArchitecture.MAC_OS_X_x86,    Constants.DEFAULT_MAC_OS_X_X86);
+        executables.put(OsArchitecture.MAC_OS_X_x86_64, Constants.DEFAULT_MAC_OS_X_X86_64);
+        executables.put(OsArchitecture.MAC_OS_X_arm64,  Constants.DEFAULT_MAC_OS_X_ARM64);
+
+        executables.put(OsArchitecture.WINDOWS_x86,     Constants.DEFAULT_WINDOWS_X86);
+        executables.put(OsArchitecture.WINDOWS_x86_64,  Constants.DEFAULT_WINDOWS_X86_64);
     }
 
     public RedisExecProvider override(OS os, String executable) {

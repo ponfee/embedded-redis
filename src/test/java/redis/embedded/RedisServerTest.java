@@ -97,11 +97,16 @@ public class RedisServerTest {
     @Test
     public void shouldOverrideDefaultExecutable() throws Exception {
         RedisExecProvider customProvider = RedisExecProvider.defaultProvider()
-                .override(OS.UNIX, Architecture.x86, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-386").getFile())
-                .override(OS.UNIX, Architecture.x86_64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-amd64").getFile())
-                .override(OS.UNIX, Architecture.arm64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-arm64").getFile())
-                .override(OS.MAC_OS_X, Architecture.x86_64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-darwin-amd64").getFile())
-                .override(OS.MAC_OS_X, Architecture.arm64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-darwin-arm64").getFile());
+                .override(OS.WINDOWS,  Architecture.x86,    Resources.getResource(Constants.DEFAULT_WINDOWS_X86).getFile())
+                .override(OS.WINDOWS,  Architecture.x86_64, Resources.getResource(Constants.DEFAULT_WINDOWS_X86_64).getFile())
+
+                .override(OS.UNIX,     Architecture.x86,    Resources.getResource(Constants.DEFAULT_UNIX_X86).getFile())
+                .override(OS.UNIX,     Architecture.x86_64, Resources.getResource(Constants.DEFAULT_UNIX_X86_64).getFile())
+                .override(OS.UNIX,     Architecture.arm64,  Resources.getResource(Constants.DEFAULT_UNIX_ARM64).getFile())
+
+                .override(OS.MAC_OS_X, Architecture.x86,    Resources.getResource(Constants.DEFAULT_MAC_OS_X_X86).getFile())
+                .override(OS.MAC_OS_X, Architecture.x86_64, Resources.getResource(Constants.DEFAULT_MAC_OS_X_X86_64).getFile())
+                .override(OS.MAC_OS_X, Architecture.arm64,  Resources.getResource(Constants.DEFAULT_MAC_OS_X_ARM64).getFile());
 
         redisServer = new RedisServerBuilder()
                 .redisExecProvider(customProvider)
