@@ -31,8 +31,8 @@ public class RedisSentinelTest {
 
     @Test(timeout = 3000L)
     public void testSimpleRun() throws Exception {
-        server = new RedisServer();
-        sentinel = RedisSentinel.builder().bind(bindAddress).build();
+        server = RedisServerBuilder.newBuilder().port(RedisServer.DEFAULT_REDIS_PORT).build();
+        sentinel = RedisSentinelBuilder.newBuilder().bind(bindAddress).build();
         sentinel.start();
         server.start();
         TimeUnit.SECONDS.sleep(1);
@@ -42,7 +42,7 @@ public class RedisSentinelTest {
 
     @Test
     public void shouldAllowSubsequentRuns() throws Exception {
-        sentinel = RedisSentinel.builder().bind(bindAddress).build();
+        sentinel = RedisSentinelBuilder.newBuilder().bind(bindAddress).build();
         sentinel.start();
         sentinel.stop();
 
@@ -56,8 +56,8 @@ public class RedisSentinelTest {
     @Test
     public void testSimpleOperationsAfterRun() throws Exception {
         //given
-        server = new RedisServer();
-        sentinel = RedisSentinel.builder().bind(bindAddress).build();
+        server = RedisServerBuilder.newBuilder().port(RedisServer.DEFAULT_REDIS_PORT).build();
+        sentinel = RedisSentinelBuilder.newBuilder().bind(bindAddress).build();
         server.start();
         sentinel.start();
         TimeUnit.SECONDS.sleep(1);
@@ -84,7 +84,7 @@ public class RedisSentinelTest {
 
     @Test
     public void testAwaitRedisSentinelReady() throws Exception {
-        String readyPattern =  RedisSentinel.builder().build().redisReadyPattern();
+        String readyPattern =  RedisSentinelBuilder.newBuilder().build().redisReadyPattern();
 
         assertReadyPattern(new BufferedReader(
                         new InputStreamReader(getClass()

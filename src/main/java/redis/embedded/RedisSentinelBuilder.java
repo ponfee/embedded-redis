@@ -6,7 +6,6 @@ import redis.embedded.exceptions.RedisBuildingException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +32,13 @@ public class RedisSentinelBuilder {
     private String sentinelConf;
 
     private StringBuilder redisConfigBuilder;
+
+    private RedisSentinelBuilder() {
+    }
+
+    public static RedisSentinelBuilder newBuilder() {
+        return new RedisSentinelBuilder();
+    }
 
     public RedisSentinelBuilder redisExecProvider(RedisExecProvider redisExecProvider) {
         this.redisExecProvider = redisExecProvider;
@@ -107,17 +113,6 @@ public class RedisSentinelBuilder {
         return new RedisSentinel(args, port);
     }
 
-    private void tryResolveConfAndExec() {
-        try {
-            if (sentinelConf == null) {
-                resolveSentinelConf();
-            }
-            executable = redisExecProvider.get();
-        } catch (Exception e) {
-            throw new RedisBuildingException("Could not build sentinel instance", e);
-        }
-    }
-
     public void reset() {
         this.redisConfigBuilder = null;
         this.sentinelConf = null;
@@ -128,6 +123,19 @@ public class RedisSentinelBuilder {
         setting(String.format(DOWN_AFTER_LINE, masterName, downAfterMilliseconds));
         setting(String.format(FAILOVER_LINE, masterName, failoverTimeout));
         setting(String.format(PARALLEL_SYNCS_LINE, masterName, parallelSyncs));
+    }
+
+    // --------------------------------------------------------------------private methods
+
+    private void tryResolveConfAndExec() {
+        try {
+            if (sentinelConf == null) {
+                resolveSentinelConf();
+            }
+            executable = redisExecProvider.get();
+        } catch (Exception e) {
+            throw new RedisBuildingException("Could not build sentinel instance", e);
+        }
     }
 
     private void resolveSentinelConf() throws IOException {
@@ -151,7 +159,7 @@ public class RedisSentinelBuilder {
     private List<String> buildCommandArgs() {
         Preconditions.checkNotNull(sentinelConf);
 
-        List<String> args = new ArrayList<String>();
+        List<String> args = new ArrayList<>();
         args.add(executable.getAbsolutePath());
         args.add(sentinelConf);
         args.add("--sentinel");
@@ -163,4 +171,5 @@ public class RedisSentinelBuilder {
 
         return args;
     }
+
 }

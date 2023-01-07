@@ -20,10 +20,6 @@ public class RedisExecProvider {
     }
 
     private RedisExecProvider() {
-        initExecutables();
-    }
-
-    private void initExecutables() {
         executables.put(OsArchitecture.UNIX_x86,        Constants.DEFAULT_UNIX_X86);
         executables.put(OsArchitecture.UNIX_x86_64,     Constants.DEFAULT_UNIX_X86_64);
         executables.put(OsArchitecture.UNIX_arm64,      Constants.DEFAULT_UNIX_ARM64);
@@ -58,10 +54,7 @@ public class RedisExecProvider {
         }
 
         String executablePath = executables.get(osArch);
-
-        return fileExists(executablePath) ?
-                new File(executablePath) :
-                JarUtil.extractExecutableFromJar(executablePath);
+        return fileExists(executablePath) ? new File(executablePath) : JarUtil.extractExecutableFromJar(executablePath);
 
     }
 

@@ -5,17 +5,17 @@ Redis embedded server for Java integration testing
 
 Fork Notes
 ==============
-This repository is a fork of https://github.com/ozimov/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.7 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
+This repository is a fork of https://github.com/signalapp/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.7 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
 
 Maven dependency
 ==============
 
-Maven Central:
+[Maven Central](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis):
 ```xml
 <dependency>
-  <groupId>org.signal</groupId>
+  <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>0.8.3</version>
+  <version>1.0</version>
 </dependency>
 ```
 
@@ -180,9 +180,17 @@ Contributors
  * Rob Winch ([@rwinch](https://github.com/rwinch))
  * Jon Chambers ([@jchambers](https://github.com/jchambers))
  * Chris Eager ([@eager](https://github.com/eager))
+ * Ponfee ([@eager](https://github.com/ponfee))
 
 Changelog
 ==============
+
+### 1.0
+* refactor the [RedisServer](src/main/java/redis/embedded/RedisServer.java) code
+
+### 0.9
+* Upgrade dependency jar version
+* Include more OS platform and more version of [redis server executable binary](bin)
 
 ### 0.8.3
  * Updated to Redis 6.2.7

@@ -8,45 +8,18 @@ import java.util.List;
 
 public class RedisServer extends AbstractRedisInstance {
     private static final String REDIS_READY_PATTERN = ".*(R|r)eady to accept connections.*";
-    private static final int DEFAULT_REDIS_PORT = 6379;
+    public static final int DEFAULT_REDIS_PORT = 6379;
 
-    public RedisServer() {
-        this(DEFAULT_REDIS_PORT);
+    RedisServer(int port, int tlsPort, List<String> args) {
+        super(port, tlsPort, new ArrayList<>(args));
     }
 
-    public RedisServer(int port) {
-        super(port);
-        this.args = builder().port(port).build().args;
-	}
-
-    public RedisServer(int port, int tlsPort) {
-        super(port, tlsPort);
-        this.args = builder().port(port).tlsPort(tlsPort).build().args;
+    public RedisServer(int port, File executable) {
+        super(port, Arrays.asList(executable.getAbsolutePath(), "--port", Integer.toString(port)));
     }
 
-    public RedisServer(File executable, int port) {
-        super(port);
-        this.args = Arrays.asList(
-                executable.getAbsolutePath(),
-                "--port", Integer.toString(port)
-        );
-    }
-
-    public RedisServer(RedisExecProvider redisExecProvider, int port) throws IOException {
-        super(port);
-        this.args = Arrays.asList(
-                redisExecProvider.get().getAbsolutePath(),
-                "--port", Integer.toString(port)
-        );
-    }
-
-    RedisServer(List<String> args, int port, int tlsPort) {
-        super(port, tlsPort);
-        this.args = new ArrayList<>(args);
-    }
-
-    public static RedisServerBuilder builder() {
-        return new RedisServerBuilder();
+    public RedisServer(int port, RedisExecProvider redisExecProvider) throws IOException {
+        super(port,Arrays.asList(redisExecProvider.get().getAbsolutePath(), "--port", Integer.toString(port)));
     }
 
     @Override

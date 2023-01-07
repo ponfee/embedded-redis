@@ -7,7 +7,6 @@ import redis.embedded.exceptions.RedisBuildingException;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +15,22 @@ public class RedisServerBuilder {
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private static final String CONF_FILENAME = "embedded-redis-server";
 
-    private File executable;
     private RedisExecProvider redisExecProvider = RedisExecProvider.defaultProvider();
-    private String bind="127.0.0.1";
+    private String bind = "127.0.0.1";
     private int port = 6379;
     private int tlsPort = 0;
     private InetSocketAddress slaveOf;
     private String redisConf;
+    private File executable;
 
     private StringBuilder redisConfigBuilder;
+
+    private RedisServerBuilder() {
+    }
+
+    public static RedisServerBuilder newBuilder() {
+        return new RedisServerBuilder();
+    }
 
     public RedisServerBuilder redisExecProvider(RedisExecProvider redisExecProvider) {
         this.redisExecProvider = redisExecProvider;
@@ -79,10 +85,9 @@ public class RedisServerBuilder {
     }
 
     public RedisServer build() {
-        setting("bind "+bind);
+        setting("bind " + bind);
         tryResolveConfAndExec();
-        List<String> args = buildCommandArgs();
-        return new RedisServer(args, port, tlsPort);
+        return new RedisServer(port, tlsPort, buildCommandArgs());
     }
 
     public void reset() {
@@ -91,6 +96,8 @@ public class RedisServerBuilder {
         this.slaveOf = null;
         this.redisConf = null;
     }
+
+    // --------------------------------------------------------------------private methods
 
     private void tryResolveConfAndExec() {
         try {
@@ -120,7 +127,7 @@ public class RedisServerBuilder {
     }
 
     private List<String> buildCommandArgs() {
-        List<String> args = new ArrayList<String>();
+        List<String> args = new ArrayList<>();
         args.add(executable.getAbsolutePath());
 
         if (!Strings.isNullOrEmpty(redisConf)) {
@@ -143,4 +150,5 @@ public class RedisServerBuilder {
 
         return args;
     }
+
 }

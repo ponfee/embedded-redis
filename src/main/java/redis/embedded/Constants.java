@@ -13,8 +13,8 @@ package redis.embedded;
  */
 public class Constants {
 
-    public static final String DEFAULT_WINDOWS_X86     = "redis-server-5.0.14.1.exe";
-    public static final String DEFAULT_WINDOWS_X86_64  = "redis-server-5.0.14.1.exe";
+    public static final String DEFAULT_WINDOWS_X86     = "redis-server-5.0.14.1-win-amd64.exe";
+    public static final String DEFAULT_WINDOWS_X86_64  = "redis-server-5.0.14.1-win-amd64.exe";
 
     public static final String DEFAULT_UNIX_X86        = "redis-server-6.2.7-linux-386";
     public static final String DEFAULT_UNIX_X86_64     = "redis-server-6.2.7-linux-amd64";
