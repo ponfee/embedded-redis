@@ -26,4 +26,8 @@ public class RedisServer extends AbstractRedisInstance {
     protected String redisReadyPattern() {
         return REDIS_READY_PATTERN;
     }
+
+    public static RedisServerBuilder builder() {
+        return new RedisServerBuilder();
+    }
 }

@@ -15,11 +15,11 @@ public class RedisServerClusterTest {
 
     @Before
     public void setUp() throws Exception {
-        redisServer1 = RedisServerBuilder.newBuilder()
+        redisServer1 = RedisServer.builder()
                 .port(6300)
                 .build();
 
-        redisServer2 = RedisServerBuilder.newBuilder()
+        redisServer2 = RedisServer.builder()
                 .port(6301)
                 .slaveOf("localhost", 6300)
                 .build();

@@ -25,11 +25,7 @@ public class RedisServerBuilder {
 
     private StringBuilder redisConfigBuilder;
 
-    private RedisServerBuilder() {
-    }
-
-    public static RedisServerBuilder newBuilder() {
-        return new RedisServerBuilder();
+    RedisServerBuilder() {
     }
 
     public RedisServerBuilder redisExecProvider(RedisExecProvider redisExecProvider) {

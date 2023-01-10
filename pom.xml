@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
 
   <name>embedded-redis</name>
   <description>Redis embedded server for Java integration testing, Project forked from https://github.com/signalapp/embedded-redis, Upgrade dependency jar version.</description>
@@ -65,6 +65,13 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.11.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.36</version>
+      <optional>true</optional>
     </dependency>
 
     <!-- Test dependencies -->
@@ -194,6 +201,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M7</version>
+        <configuration>
+          <!-- Single thread run tests -->
+          <forkCount>1</forkCount>
+          <reuseForks>false</reuseForks>
+        </configuration>
       </plugin>
 
       <plugin>

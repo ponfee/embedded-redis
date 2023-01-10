@@ -14,4 +14,8 @@ public class RedisSentinel extends AbstractRedisInstance {
     protected String redisReadyPattern() {
         return REDIS_READY_PATTERN;
     }
+
+    public static RedisSentinelBuilder builder() {
+        return new RedisSentinelBuilder();
+    }
 }

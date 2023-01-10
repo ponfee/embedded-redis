@@ -11,8 +11,8 @@ import java.util.List;
 
 public class RedisClusterBuilder {
 
-    private RedisSentinelBuilder sentinelBuilder = RedisSentinelBuilder.newBuilder();
-    private RedisServerBuilder serverBuilder = RedisServerBuilder.newBuilder();
+    private RedisSentinelBuilder sentinelBuilder = RedisSentinel.builder();
+    private RedisServerBuilder serverBuilder = RedisServer.builder();
 
     private int sentinelCount = 1;
     private int quorumSize = 1;
@@ -20,19 +20,17 @@ public class RedisClusterBuilder {
     private PortProvider replicationGroupPortProvider = new SequencePortProvider(6379);
     private final List<ReplicationGroup> groups = new LinkedList<>();
 
-    private RedisClusterBuilder() {
+    RedisClusterBuilder() {
     }
 
-    public static RedisClusterBuilder withServerBuilder(RedisServerBuilder serverBuilder) {
-        RedisClusterBuilder builder = new RedisClusterBuilder();
-        builder.serverBuilder = serverBuilder;
-        return builder;
+    public RedisClusterBuilder withRedisServerBuilder(RedisServerBuilder serverBuilder) {
+        this.serverBuilder = serverBuilder;
+        return this;
     }
 
-    public static RedisClusterBuilder withSentinelBuilder(RedisSentinelBuilder sentinelBuilder) {
-        RedisClusterBuilder builder = new RedisClusterBuilder();
-        builder.sentinelBuilder = sentinelBuilder;
-        return builder;
+    public RedisClusterBuilder withRedisSentinelBuilder(RedisSentinelBuilder sentinelBuilder) {
+        this.sentinelBuilder = sentinelBuilder;
+        return this;
     }
 
     public RedisClusterBuilder sentinelPorts(Collection<Integer> ports) {

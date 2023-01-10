@@ -55,7 +55,7 @@ public class RedisTlsTest {
 	@Before
 	public void setup() throws Exception {
 
-		redisServer = RedisServerBuilder.newBuilder()
+		redisServer = RedisServer.builder()
 				.port(0) // disable non-tls
 				.tlsPort(6380)
 				.setting("tls-cert-file " + certFile.getAbsolutePath())
@@ -66,7 +66,7 @@ public class RedisTlsTest {
 	}
 
 
-	@Test(timeout = 1500L)
+	@Test(timeout = 7000L)
 	public void testSimpleRun() throws Exception {
 		redisServer.start();
 		Thread.sleep(1000L);

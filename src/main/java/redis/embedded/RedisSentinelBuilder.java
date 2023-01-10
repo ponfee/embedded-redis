@@ -33,11 +33,7 @@ public class RedisSentinelBuilder {
 
     private StringBuilder redisConfigBuilder;
 
-    private RedisSentinelBuilder() {
-    }
-
-    public static RedisSentinelBuilder newBuilder() {
-        return new RedisSentinelBuilder();
+    RedisSentinelBuilder() {
     }
 
     public RedisSentinelBuilder redisExecProvider(RedisExecProvider redisExecProvider) {

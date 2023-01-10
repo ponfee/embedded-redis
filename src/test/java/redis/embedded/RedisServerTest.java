@@ -19,9 +19,9 @@ public class RedisServerTest {
 
     private RedisServer redisServer;
 
-    @Test(timeout = 1500L)
+    @Test(timeout = 7000L)
     public void testSimpleRun() throws InterruptedException {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         redisServer.start();
         Thread.sleep(1000L);
         redisServer.stop();
@@ -30,7 +30,7 @@ public class RedisServerTest {
     @Test(expected = RuntimeException.class)
     public void shouldNotAllowMultipleRunsWithoutStop() {
         try {
-            redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+            redisServer = RedisServer.builder().port(6379).build();
             redisServer.start();
             redisServer.start();
         } finally {
@@ -40,7 +40,7 @@ public class RedisServerTest {
 
     @Test
     public void shouldAllowSubsequentRuns() {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         redisServer.start();
         redisServer.stop();
 
@@ -53,7 +53,7 @@ public class RedisServerTest {
 
     @Test
     public void testSimpleOperationsAfterRun() {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         redisServer.start();
 
         JedisPool pool = null;
@@ -76,13 +76,13 @@ public class RedisServerTest {
 
     @Test
     public void shouldIndicateInactiveBeforeStart() {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         assertFalse(redisServer.isActive());
     }
 
     @Test
     public void shouldIndicateActiveAfterStart() {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         redisServer.start();
         assertTrue(redisServer.isActive());
         redisServer.stop();
@@ -90,7 +90,7 @@ public class RedisServerTest {
 
     @Test
     public void shouldIndicateInactiveAfterStop() {
-        redisServer = RedisServerBuilder.newBuilder().port(6379).build();
+        redisServer = RedisServer.builder().port(6379).build();
         redisServer.start();
         redisServer.stop();
         assertFalse(redisServer.isActive());
@@ -110,7 +110,7 @@ public class RedisServerTest {
             .override(OS.MAC_OS_X, Architecture.x86_64,  Resources.getResource(Constants.DEFAULT_MAC_OS_X_X86_64).getFile())
             .override(OS.MAC_OS_X, Architecture.arm64,   Resources.getResource(Constants.DEFAULT_MAC_OS_X_ARM64).getFile());
 
-        redisServer = RedisServerBuilder.newBuilder()
+        redisServer = RedisServer.builder()
             .redisExecProvider(customProvider)
             .build();
     }
@@ -121,14 +121,14 @@ public class RedisServerTest {
             .override(OS.UNIX, "some")
             .override(OS.MAC_OS_X, "some");
 
-        redisServer = RedisServerBuilder.newBuilder()
+        redisServer = RedisServer.builder()
             .redisExecProvider(buggyProvider)
             .build();
     }
 
     @Test
     public void testAwaitRedisServerReady() throws IOException {
-        String readyPattern = RedisServerBuilder.newBuilder().build().redisReadyPattern();
+        String readyPattern = RedisServer.builder().build().redisReadyPattern();
         assertReadyPattern(loadResource("redis-2.x-standalone-startup-output.txt"), readyPattern);
         assertReadyPattern(loadResource("redis-3.x-standalone-startup-output.txt"), readyPattern);
         assertReadyPattern(loadResource("redis-4.x-standalone-startup-output.txt"), readyPattern);

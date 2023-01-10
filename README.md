@@ -1,6 +1,9 @@
 embedded-redis
 ==============
 
+[![JDK](https://img.shields.io/badge/jdk-8+-green.svg)](https://www.oracle.com/java/technologies/downloads/#java8)
+[![Maven Central](https://img.shields.io/badge/maven--central-1.1-orange.svg?style=plastic&logo=apachemaven)](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis)
+
 Redis embedded server for Java integration testing
 
 Fork Notes
@@ -10,12 +13,12 @@ This repository is a fork of https://github.com/signalapp/embedded-redis, which 
 Maven dependency
 ==============
 
-[Maven Central](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis):
+[Download From Maven Central](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis):
 ```xml
 <dependency>
   <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
@@ -24,7 +27,9 @@ Usage
 
 Running RedisServer is as simple as:
 ```java
-RedisServer redisServer = new RedisServer(6379);
+RedisServer redisServer = RedisServer.builder()
+    .port(6379)
+    .build();
 redisServer.start();
 // do some work
 redisServer.stop();
@@ -33,7 +38,10 @@ redisServer.stop();
 You can also provide RedisServer with your own executable:
 ```java
 // 1) given explicit file (os-independence broken!)
-RedisServer redisServer = new RedisServer("/path/to/your/redis", 6379);
+RedisServer redisServer = RedisServer.builder()
+    .port(6379)
+    .configFile("/path/to/your/redis")
+    .build();
 
 // 2) given os-independent matrix
 RedisExecProvider customProvider = RedisExecProvider.defaultProvider()
@@ -44,7 +52,10 @@ RedisExecProvider customProvider = RedisExecProvider.defaultProvider()
   .override(OS.MAC_OS_X, Architecture.x86_64, "/path/to/macosx/redis-x86_64")
   .override(OS.MAC_OS_X, Architecture.arm64, "/path/to/macosx/redis.arm64")
   
-RedisServer redisServer = new RedisServer(customProvider, 6379);
+RedisServer redisServer = RedisServer.builder()
+    .port(6379)
+    .redisExecProvider(customProvider)
+    .build();
 ```
 
 You can also use fluent API to create RedisServer:
@@ -78,33 +89,33 @@ Our Embedded Redis has support for HA Redis clusters with Sentinels and master-s
 A simple redis integration test with Redis cluster on ephemeral ports, with setup similar to that from production would look like this:
 ```java
 public class SomeIntegrationTestThatRequiresRedis {
-  private RedisCluster cluster;
-  private Set<String> jedisSentinelHosts;
+    private RedisCluster cluster;
+    private Set<String> jedisSentinelHosts;
 
-  @Before
-  public void setup() throws Exception {
-    //creates a cluster with 3 sentinels, quorum size of 2 and 3 replication groups, each with one master and one slave
-    cluster = RedisCluster.builder().ephemeral().sentinelCount(3).quorumSize(2)
-                    .replicationGroup("master1", 1)
-                    .replicationGroup("master2", 1)
-                    .replicationGroup("master3", 1)
-                    .build();
-    cluster.start();
+    @Before
+    public void setup() {
+        //creates a cluster with 3 sentinels, quorum size of 2 and 3 replication groups, each with one master and one slave
+        cluster = RedisCluster.builder().ephemeral().sentinelCount(3).quorumSize(2)
+            .replicationGroup("master1", 1)
+            .replicationGroup("master2", 1)
+            .replicationGroup("master3", 1)
+            .build();
+        cluster.start();
 
-    //retrieve ports on which sentinels have been started, using a simple Jedis utility class
-    jedisSentinelHosts = JedisUtil.sentinelHosts(cluster);
-  }
-  
-  @Test
-  public void test() throws Exception {
-    // testing code that requires redis running
-    JedisSentinelPool pool = new JedisSentinelPool("master1", jedisSentinelHosts);
-  }
-  
-  @After
-  public void tearDown() throws Exception {
-    cluster.stop();
-  }
+        //retrieve ports on which sentinels have been started, using a simple Jedis utility class
+        jedisSentinelHosts = JedisUtil.sentinelHosts(cluster);
+    }
+
+    @Test
+    public void test() {
+        // testing code that requires redis running
+        JedisSentinelPool pool = new JedisSentinelPool("master1", jedisSentinelHosts);
+    }
+
+    @After
+    public void tearDown() {
+        cluster.stop();
+    }
 }
 ```
 
@@ -117,22 +128,23 @@ or servers with ```cluster.serverPorts()```. ```JedisUtil``` class contains util
 You can also start Redis cluster on predefined ports and even mix both approaches:
 ```java
 public class SomeIntegrationTestThatRequiresRedis {
-  private RedisCluster cluster;
+    private RedisCluster cluster;
 
-  @Before
-  public void setup() throws Exception {
-    final List<Integer> sentinels = Arrays.asList(26739, 26912);
-    final List<Integer> group1 = Arrays.asList(6667, 6668);
-    final List<Integer> group2 = Arrays.asList(6387, 6379);
-    //creates a cluster with 3 sentinels, quorum size of 2 and 3 replication groups, each with one master and one slave
-    cluster = RedisCluster.builder().sentinelPorts(sentinels).quorumSize(2)
-                    .serverPorts(group1).replicationGroup("master1", 1)
-                    .serverPorts(group2).replicationGroup("master2", 1)
-                    .ephemeralServers().replicationGroup("master3", 1)
-                    .build();
-    cluster.start();
-  }
-//(...)
+    @Before
+    public void setup() {
+        final List<Integer> sentinels = Arrays.asList(26739, 26912);
+        final List<Integer> group1 = Arrays.asList(6667, 6668);
+        final List<Integer> group2 = Arrays.asList(6387, 6379);
+        //creates a cluster with 3 sentinels, quorum size of 2 and 3 replication groups, each with one master and one slave
+        cluster = RedisCluster.builder().sentinelPorts(sentinels).quorumSize(2)
+            .serverPorts(group1).replicationGroup("master1", 1)
+            .serverPorts(group2).replicationGroup("master2", 1)
+            .ephemeralServers().replicationGroup("master3", 1)
+            .build();
+        cluster.start();
+    }
+    //(...)
+}
 ```
 The above will create and start a cluster with sentinels on ports ```26739, 26912```, first replication group on ```6667, 6668```,
 second replication group on ```6387, 6379``` and third replication group on ephemeral ports.
@@ -185,8 +197,14 @@ Contributors
 Changelog
 ==============
 
+### 1.1
+* add maven wrapper
+* add slf4j-simple
+* optimize builder code
+* configure single thread run tests
+
 ### 1.0
-* refactor the [RedisServer](src/main/java/redis/embedded/RedisServer.java) code
+* refactor the [RedisServerBuilder](src/main/java/redis/embedded/RedisServerBuilder.java) code
 
 ### 0.9
 * Upgrade dependency jar version

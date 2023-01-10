@@ -13,8 +13,8 @@ public class RedisCluster implements Redis {
     private final List<Redis> servers = new LinkedList<>();
 
     RedisCluster(List<Redis> sentinels, List<Redis> servers) {
-        this.servers.addAll(servers);
         this.sentinels.addAll(sentinels);
+        this.servers.addAll(servers);
     }
 
     @Override
@@ -106,6 +106,10 @@ public class RedisCluster implements Redis {
             ports.addAll(redis.tlsPorts());
         }
         return ports;
+    }
+
+    public static RedisClusterBuilder builder() {
+        return new RedisClusterBuilder();
     }
 
 }
