@@ -1,29 +1,29 @@
-embedded-redis
-==============
-
 [![JDK](https://img.shields.io/badge/jdk-8+-green.svg)](https://www.oracle.com/java/technologies/downloads/#java8)
-[![Maven Central](https://img.shields.io/badge/maven--central-1.1-orange.svg?style=plastic&logo=apachemaven)](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis)
+[![Maven Central](https://img.shields.io/badge/maven--central-1.2-orange.svg?style=plastic&logo=apachemaven)](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis)
+
+# embedded-redis
 
 Redis embedded server for Java integration testing
 
-Fork Notes
-==============
+## Fork Notes
+
 This repository is a fork of https://github.com/signalapp/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.7 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
 
-Maven dependency
-==============
+## Maven dependency
 
 [Download From Maven Central](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis):
+
+> [Note](https://developer.aliyun.com/mvn/search): If it cannot download, please remove **aliyun maven central mirror** configuration from the maven `settings.xml` file.
+
 ```xml
 <dependency>
   <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 
-Usage
-==============
+## Usage
 
 Running RedisServer is as simple as:
 ```java
@@ -85,7 +85,7 @@ RedisServer redisServer = RedisServer.builder()
 
 Our Embedded Redis has support for HA Redis clusters with Sentinels and master-slave replication
 
-#### Using ephemeral ports
+### Using ephemeral ports
 A simple redis integration test with Redis cluster on ephemeral ports, with setup similar to that from production would look like this:
 ```java
 public class SomeIntegrationTestThatRequiresRedis {
@@ -119,12 +119,12 @@ public class SomeIntegrationTestThatRequiresRedis {
 }
 ```
 
-#### Retrieving ports
+### Retrieving ports
 The above example starts Redis cluster on ephemeral ports, which you can later get with ```cluster.ports()```,
 which will return a list of all ports of the cluster. You can also get ports of sentinels with ```cluster.sentinelPorts()```
 or servers with ```cluster.serverPorts()```. ```JedisUtil``` class contains utility methods for use with Jedis client.
 
-#### Using predefined ports
+### Using predefined ports
 You can also start Redis cluster on predefined ports and even mix both approaches:
 ```java
 public class SomeIntegrationTestThatRequiresRedis {
@@ -149,8 +149,7 @@ public class SomeIntegrationTestThatRequiresRedis {
 The above will create and start a cluster with sentinels on ports ```26739, 26912```, first replication group on ```6667, 6668```,
 second replication group on ```6387, 6379``` and third replication group on ephemeral ports.
 
-Redis version
-==============
+## Redis version
 
 By default, RedisServer runs an OS-specific executable enclosed in in the `embedded-redis` jar. The jar includes:
 
@@ -163,9 +162,8 @@ Note: the `build-server-binaries.sh` script attempts to build all of the above n
 
 Callers may provide a path to a specific `redis-server` executable if needed.
 
+## License
 
-License
-==============
 Licensed under the Apache License, Version 2.0
 
 The included Redis binaries are covered by [Redis’s license](https://github.com/redis/redis/blob/4930d19e70c391750479951022e207e19111eb55/COPYING):
@@ -181,9 +179,8 @@ The included Redis binaries are covered by [Redis’s license](https://github.co
 >
 > THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+## Contributors
 
-Contributors
-==============
  * Krzysztof Styrc ([@kstyrc](https://github.com/kstyrc))
  * Piotr Turek ([@turu](https://github.com/turu))
  * anthonyu ([@anthonyu](https://github.com/anthonyu))
@@ -194,8 +191,11 @@ Contributors
  * Chris Eager ([@eager](https://github.com/eager))
  * Ponfee ([@eager](https://github.com/ponfee))
 
-Changelog
-==============
+## Changelog
+
+### 1.2
+* degrade maven wrapper version
+* Updated to Windows Redis 6.2.6
 
 ### 1.1
 * add maven wrapper
