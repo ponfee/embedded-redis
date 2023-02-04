@@ -1,5 +1,5 @@
 [![JDK](https://img.shields.io/badge/jdk-8+-green.svg)](https://www.oracle.com/java/technologies/downloads/#java8)
-[![Maven Central](https://img.shields.io/badge/maven--central-1.2-orange.svg?style=plastic&logo=apachemaven)](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis)
+[![Maven Central](https://img.shields.io/badge/maven--central-1.2-orange.svg?style=plastic&logo=apachemaven)](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.2)
 
 # embedded-redis
 
@@ -11,7 +11,7 @@ This repository is a fork of https://github.com/signalapp/embedded-redis, which 
 
 ## Maven dependency
 
-[Download From Maven Central](https://mvnrepository.com/artifact/cn.ponfee/embedded-redis):
+[Download From Maven Central](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.2):
 
 > [Note](https://developer.aliyun.com/mvn/search): If it cannot download, please remove **aliyun maven central mirror** configuration from the maven `settings.xml` file.
 
