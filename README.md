@@ -189,13 +189,13 @@ The included Redis binaries are covered by [Redis’s license](https://github.co
  * Rob Winch ([@rwinch](https://github.com/rwinch))
  * Jon Chambers ([@jchambers](https://github.com/jchambers))
  * Chris Eager ([@eager](https://github.com/eager))
- * Ponfee ([@eager](https://github.com/ponfee))
+ * Ponfee ([@ponfee](https://github.com/ponfee))
 
 ## Changelog
 
 ### 1.2
 * degrade maven wrapper version
-* Updated to Windows Redis 6.2.6
+* Updated Windows Redis version to 6.2.6
 
 ### 1.1
 * add maven wrapper
