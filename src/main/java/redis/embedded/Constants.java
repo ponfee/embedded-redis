@@ -21,8 +21,8 @@ public class Constants {
     public static final String DEFAULT_UNIX_X86_64     = "redis-server-7.0.8-linux-amd64";
     public static final String DEFAULT_UNIX_ARM64      = "redis-server-7.0.8-linux-arm64";
 
-    public static final String DEFAULT_MAC_OS_X_X86    = "redis-server-6.2.7-darwin-amd64";
-    public static final String DEFAULT_MAC_OS_X_X86_64 = "redis-server-6.2.7-darwin-amd64";
+    public static final String DEFAULT_MAC_OS_X_X86    = "redis-server-7.0.8-darwin-amd64";
+    public static final String DEFAULT_MAC_OS_X_X86_64 = "redis-server-7.0.8-darwin-amd64";
     public static final String DEFAULT_MAC_OS_X_ARM64  = "redis-server-7.0.8-darwin-arm64";
 
 }
