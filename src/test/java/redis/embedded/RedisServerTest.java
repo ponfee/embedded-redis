@@ -136,7 +136,7 @@ public class RedisServerTest {
     }
 
     private BufferedReader loadResource(String path) {
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("redis-6.x-standalone-startup-output.txt");
+        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(path);
         return new BufferedReader(new InputStreamReader(resourceAsStream));
     }
 
