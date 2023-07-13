@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -301,7 +302,7 @@ public class RedisClusterTest {
         //then
         assertEquals("1", jedis.mget("abc").get(0));
         assertEquals("2", jedis.mget("def").get(0));
-        assertEquals(null, jedis.mget("xyz").get(0));
+        assertNull(jedis.mget("xyz").get(0));
         return jedis;
     }
 
