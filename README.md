@@ -13,8 +13,6 @@ This repository is a fork of https://github.com/signalapp/embedded-redis, which 
 
 [Download From Maven Central](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.2):
 
-> [Note](https://developer.aliyun.com/mvn/search): If it cannot download, please remove **aliyun maven central mirror** configuration from the maven `settings.xml` file.
-
 ```xml
 <dependency>
   <groupId>cn.ponfee</groupId>
