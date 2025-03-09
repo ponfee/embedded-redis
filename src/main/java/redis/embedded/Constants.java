@@ -16,15 +16,15 @@ package redis.embedded;
  */
 public class Constants {
 
-    public static final String DEFAULT_WINDOWS_X86     = "redis-server-6.2.6-win-amd64.exe";
-    public static final String DEFAULT_WINDOWS_X86_64  = "redis-server-6.2.6-win-amd64.exe";
+    public static final String DEFAULT_WINDOWS_X86     = "redis-server-7.4.2-win-amd64.exe";
+    public static final String DEFAULT_WINDOWS_X86_64  = "redis-server-7.4.2-win-amd64.exe";
 
-    public static final String DEFAULT_UNIX_X86        = "redis-server-6.2.7-linux-386";
-    public static final String DEFAULT_UNIX_X86_64     = "redis-server-6.2.7-linux-amd64";
-    public static final String DEFAULT_UNIX_ARM64      = "redis-server-6.2.7-linux-arm64";
+    public static final String DEFAULT_UNIX_X86        = "redis-server-7.4.1-linux-amd64";
+    public static final String DEFAULT_UNIX_X86_64     = "redis-server-7.4.1-linux-amd64";
+    public static final String DEFAULT_UNIX_ARM64      = "redis-server-7.4.1-linux-arm64";
 
-    public static final String DEFAULT_MAC_OS_X_X86    = "redis-server-6.2.7-darwin-amd64";
-    public static final String DEFAULT_MAC_OS_X_X86_64 = "redis-server-6.2.7-darwin-amd64";
-    public static final String DEFAULT_MAC_OS_X_ARM64  = "redis-server-6.2.7-darwin-arm64";
+    public static final String DEFAULT_MAC_OS_X_X86    = "redis-server-7.4.1-darwin-amd64";
+    public static final String DEFAULT_MAC_OS_X_X86_64 = "redis-server-7.4.1-darwin-amd64";
+    public static final String DEFAULT_MAC_OS_X_ARM64  = "redis-server-7.4.1-darwin-arm64";
 
 }

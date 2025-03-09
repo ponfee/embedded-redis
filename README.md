@@ -1,5 +1,5 @@
 [![JDK](https://img.shields.io/badge/jdk-8+-green.svg)](https://www.oracle.com/java/technologies/downloads/#java8)
-[![Maven Central](https://img.shields.io/badge/maven--central-1.4-orange.svg?style=plastic&logo=apachemaven)](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.4)
+[![Maven Central](https://img.shields.io/badge/maven--central-1.5-orange.svg?style=plastic&logo=apachemaven)](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.5)
 
 # embedded-redis
 
@@ -11,13 +11,13 @@ This repository is a fork of https://github.com/signalapp/embedded-redis, which 
 
 ## Maven dependency
 
-[Download From Maven Central](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.4):
+[Download From Maven Central](https://central.sonatype.com/artifact/cn.ponfee/embedded-redis/1.5):
 
 ```xml
 <dependency>
   <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>1.4</version>
+  <version>1.5</version>
 </dependency>
 ```
 
@@ -190,6 +190,10 @@ The included Redis binaries are covered by [Redis’s license](https://github.co
  * Ponfee ([@ponfee](https://github.com/ponfee))
 
 ## Changelog
+
+### 1.5
+* upgrade maven jar version
+* upgrade Redis server version to 7.4.1
 
 ### 1.4
 * upgrade maven jar version
