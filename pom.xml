@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.ponfee</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>1.5</version>
+  <version>1.6-SNAPSHOT</version>
 
   <name>embedded-redis</name>
   <description>Redis embedded server for Java integration testing, Project forked from https://github.com/signalapp/embedded-redis, Upgrade dependency jar version.</description>
@@ -57,12 +57,6 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>33.4.0-jre</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.18.0</version>
       <optional>true</optional>
     </dependency>
 

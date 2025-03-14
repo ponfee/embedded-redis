@@ -54,29 +54,26 @@ public class RedisSentinelTest {
     }
 
     @Test
-    public void testSimpleOperationsAfterRun() throws Exception {
+    public void testSimpleOperationsAfterRun() throws InterruptedException {
         //given
         server = RedisServer.builder().port(RedisServer.DEFAULT_REDIS_PORT).build();
         sentinel = RedisSentinel.builder().bind(bindAddress).build();
         server.start();
         sentinel.start();
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(5);
 
-        //when
-        JedisSentinelPool pool = null;
-        Jedis jedis = null;
-        try {
-            pool = new JedisSentinelPool("mymaster", Sets.newHashSet("localhost:26379"));
-            jedis = pool.getResource();
+        try (
+            JedisSentinelPool pool = new JedisSentinelPool("mymaster", Sets.newHashSet("localhost:26379"));
+            Jedis jedis = pool.getResource()
+        ) {
             jedis.mset("abc", "1", "def", "2");
 
             //then
             assertEquals("1", jedis.mget("abc").get(0));
             assertEquals("2", jedis.mget("def").get(0));
             assertNull(jedis.mget("xyz").get(0));
+            System.out.println("testSimpleOperationsAfterRun end.");
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
             sentinel.stop();
             server.stop();
         }

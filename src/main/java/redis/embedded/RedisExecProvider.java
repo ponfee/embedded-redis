@@ -54,11 +54,17 @@ public class RedisExecProvider {
         }
 
         String executablePath = executables.get(osArch);
-        return fileExists(executablePath) ? new File(executablePath) : JarUtil.extractExecutableFromJar(executablePath);
-
+        if (fileExists(executablePath)) {
+            System.out.println("Get local file redis server: " + osArch + ", " + executablePath);
+            return new File(executablePath);
+        } else {
+            System.out.println("Get jar file redis server: " + osArch + ", " + executablePath);
+            return JarUtil.extractExecutableFromJar(executablePath);
+        }
     }
 
     private boolean fileExists(String executablePath) {
         return new File(executablePath).exists();
     }
+
 }

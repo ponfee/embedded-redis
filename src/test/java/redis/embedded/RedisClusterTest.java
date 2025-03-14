@@ -1,7 +1,6 @@
 package redis.embedded;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
@@ -308,7 +307,7 @@ public class RedisClusterTest {
 
     private void closeQuietly(Closeable... closeables) {
         for (Closeable closeable : closeables) {
-            IOUtils.closeQuietly(closeable, null);
+            AbstractRedisInstance.closeQuietly(closeable);
         }
     }
 

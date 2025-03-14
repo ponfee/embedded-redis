@@ -1,6 +1,5 @@
 package redis.embedded;
 
-import org.apache.commons.io.IOUtils;
 import redis.embedded.exceptions.EmbeddedRedisException;
 
 import java.io.*;
@@ -54,12 +53,13 @@ abstract class AbstractRedisInstance implements Redis {
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop, "RedisInstanceCleaner"));
     }
 
+    @SuppressWarnings("all")
     private void logErrors() {
         final InputStream errorStream = redisProcess.getErrorStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(errorStream));
         Runnable printReaderTask = new PrintReaderRunnable(reader);
-        executor = Executors.newSingleThreadExecutor();
-        executor.submit(printReaderTask);
+        this.executor = Executors.newSingleThreadExecutor();
+        this.executor.submit(printReaderTask);
     }
 
     private void awaitRedisServerReady() throws IOException {
@@ -78,7 +78,7 @@ abstract class AbstractRedisInstance implements Redis {
                 }
             } while (!outputLine.matches(redisReadyPattern()));
         } finally {
-            IOUtils.closeQuietly(reader, null);
+            closeQuietly(reader);
         }
     }
 
@@ -133,7 +133,7 @@ abstract class AbstractRedisInstance implements Redis {
             try {
                 readLines();
             } finally {
-                IOUtils.closeQuietly(reader, null);
+                closeQuietly(reader);
             }
         }
 
@@ -148,4 +148,15 @@ abstract class AbstractRedisInstance implements Redis {
             }
         }
     }
+
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
