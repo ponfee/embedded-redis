@@ -8,6 +8,7 @@ package redis.embedded;
  *   <li><a href="https://github.com/microsoftarchive/redis/releases">Windows-2.x+</a></li>
  *   <li><a href="https://github.com/tporadowski/redis/releases">Windows-4.x+</a></li>
  *   <li><a href="https://github.com/zkteco-home/redis-windows/releases">Windows-6.x+</a></li>
+ *   <li><a href="https://github.com/redis-windows/redis-windows/releases">Windows-6.x+</a></li>
  *   <li><a href="https://redis.io/download">Linux and MacOS</a></li>
  *   <li><a href="https://github.com/redis/redis/releases">Redis source</a></li>
  * </ul>
